@@ -1,0 +1,22 @@
+{
+    "name": "word-game",
+    "version": "0.0.1",
+    "description": "Five letter word guessing game",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "postinstall": "gulp build"
+    },
+    "dependencies": {
+        "browserify": "^11.2.0",
+        "del": "^2.0.2",
+        "express": "^4.13.3",
+        "fs": "0.0.2",
+        "gulp": "^3.9.0",
+        "gulp-sass": "^2.0.4",
+        "gulp-shell": "^0.5.0",
+        "readline": "^1.1.0",
+        "request": "^2.64.0",
+        "vinyl-source-stream": "^1.1.0"
+    }
+}
