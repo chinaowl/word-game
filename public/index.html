@@ -3,11 +3,35 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Word Game</title>
+    <title>Five Letter Word Game</title>
 </head>
 
 <body>
-    Hello World
+    <form data-bind="if: showForm, submit: startGame">
+        Enter a five letter word with no repeating letters to start the game:
+        <input type="text" data-bind="value: word" />
+        <button type="submit">Start Game</button>
+    </form>
+    <div data-bind="if: invalidWord">
+        Please enter a valid word!
+    </div>
+    <div data-bind="if: couldNotGuess">
+        Are you sure your word is an actual word?
+    </div>
+    <div data-bind="if: showResults">
+        Game started!
+        <div data-bind="foreach: allGuesses">
+            <div>
+                <span data-bind="text: guess"></span> &rarr;
+                <span data-bind="text: count"></span>
+            </div>
+        </div>
+        It took the computer this many tries:
+        <span data-bind="text: allGuesses.length"></span>
+        <div>
+            <a href="javascript:window.location.reload(true)">Click here to play again!</a>
+        </div>
+    </div>
     <script src="bundle.js"></script>
 </body>
 
