@@ -24,7 +24,7 @@
         if (wordIsValid(vm.word())) {
             vm.showForm(false);
             vm.invalidWord(false);
-            guessWord(vm.word());
+            guessWord(vm.word().toLowerCase());
         } else {
             vm.invalidWord(true);
         }
@@ -63,6 +63,12 @@
             return _intersection(actual.split(''), guess.split('')).length;
         }
 
+        function eliminateAllLetters(letters) {
+            _forEach(letters, function(letter) {
+                eliminateLetter(letter);
+            });
+        }
+
         function eliminateLetter(letter) {
             if (!_includes(eliminated, letter)) {
                 eliminated.push(letter);
@@ -94,17 +100,14 @@
             possibleWords.splice(index, 1);
 
             // analyze guess
+            var lettersInGuess = guess.split('');
             if (count === 0) {
-                _forEach(guess.split(''), function(letter) {
-                    eliminateLetter(letter);
-                });
+                eliminateAllLetters(lettersInGuess);
             } else if (count === 5) {
-                found = guess.split('');
-                _forEach(_difference(unknown, found), function(letter) {
-                    eliminateLetter(letter);
-                });
+                found = lettersInGuess;
+                eliminateAllLetters(_difference(unknown, found));
             } else {
-                // TODO: more stuff here...
+                // TODO: more stuff here
             }
         }
 
