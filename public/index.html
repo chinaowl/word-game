@@ -15,19 +15,22 @@
     <div data-bind="if: invalidWord">
         Please enter a valid word!
     </div>
-    <div data-bind="if: couldNotGuess">
-        Are you sure your word is an actual word?
-    </div>
     <div data-bind="if: showResults">
-        Game started!
+    	Game started!
         <div data-bind="foreach: allGuesses">
             <div>
                 <span data-bind="text: guess"></span> &rarr;
                 <span data-bind="text: count"></span>
             </div>
         </div>
-        It took the computer this many tries:
+        <span data-bind="if: success">
+        	The computer successfully guessed your word. It took this many tries: 
+        </span>
+        <span data-bind="ifnot: success">
+            Are you sure your word is an actual word? The computer tried this many times but could not guess your word: 
+        </span>
         <span data-bind="text: allGuesses.length"></span>
+        
         <div>
             <a href="javascript:window.location.reload(true)">Click here to play again!</a>
         </div>

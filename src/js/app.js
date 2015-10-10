@@ -17,7 +17,7 @@
         showForm: ko.observable(true),
         showResults: ko.observable(false),
         invalidWord: ko.observable(false),
-        couldNotGuess: ko.observable(false)
+        success: ko.observable(false)
     };
 
     vm.startGame = function() {
@@ -59,12 +59,14 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
+        function getCorrectLetterCount(actual, guess) {
+            return _intersection(actual.split(''), guess.split('')).length;
+        }
+
         function eliminateLetter(letter) {
             if (!_includes(eliminated, letter)) {
                 eliminated.push(letter);
-                unknown = _remove(unknown, function(x) {
-                    return x === letter;
-                });
+                unknown = _difference(unknown, [letter]);
                 possibleWords = _difference(possibleWords, dictionary[letter]);
             }
         }
@@ -88,6 +90,7 @@
                 break;
             }
 
+            // remove incorrect guess from possibilities
             possibleWords.splice(index, 1);
 
             // analyze guess
@@ -95,21 +98,24 @@
                 _forEach(guess.split(''), function(letter) {
                     eliminateLetter(letter);
                 });
+            } else if (count === 5) {
+                found = guess.split('');
+                _forEach(_difference(unknown, found), function(letter) {
+                    eliminateLetter(letter);
+                });
             } else {
                 // TODO: more stuff here...
             }
         }
 
-        if (success) {
-            vm.allGuesses = allGuesses;
-            vm.showResults(true);
-        } else {
-            vm.couldNotGuess(true);
-        }
-    }
+        vm.allGuesses = allGuesses;
+        vm.showResults(true);
 
-    function getCorrectLetterCount(actual, guess) {
-        return _intersection(actual.split(''), guess.split('')).length;
+        if (success) {
+            vm.success(true);
+        } else {
+            vm.success(false);
+        }
     }
 
     ko.applyBindings(vm);
