@@ -2,7 +2,7 @@
     'use strict';
 
     var ko = require('knockout');
-    var guesser = require('./guesser.js');
+    var guesser = require('./random_guesser.js');
     var _uniq = require('lodash/array/uniq');
 
     var vm = {

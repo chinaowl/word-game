@@ -10,7 +10,6 @@
     var _includes = require('lodash/collection/includes');
 
     var allGuesses = [];
-    var found = [];
     var eliminated = [];
     var unknown = 'abcdefghijklmnopqrstuvwxyz'.split('');
     var possibleWords = allWords.slice();
@@ -72,10 +71,7 @@
             if (count === 0) {
                 eliminateAllLetters(lettersInGuess);
             } else if (count === 5) {
-                found = lettersInGuess;
-                eliminateAllLetters(_difference(unknown, found));
-            } else {
-                // TODO: more stuff here
+                eliminateAllLetters(_difference(unknown, lettersInGuess));
             }
         }
 
